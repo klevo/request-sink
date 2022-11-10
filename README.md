@@ -1,6 +1,10 @@
 # RequestSink
 
-Simple request forwarder that can be exposed publicly (through a tunnel) to forward requests to local apps under development. Why not just expose the other app in question instead? Well usually it's going to be something like a Rails app, running in development mode. You don't want to expose such codebase in development mode to public internet directly, due to the large attack surface and possible disclosure of sensitive information.
+Simple request forwarder that can be exposed publicly (through a tunnel) to forward requests to local apps under development. 
+
+This is useful if you have some kind of a push API you want to develop against, and you want to receive requests from such API, safely, on your localhost.
+
+Why not just expose the other app in question instead? Well usually it's going to be something like a Rails app, running in development mode. You don't want to expose such codebase in development mode to public internet directly, due to the large attack surface and possible disclosure of sensitive information.
 
 ## Setup
 
