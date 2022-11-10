@@ -1,4 +1,5 @@
 # request-sink
+
 Simple request forwarder that can be exposed publicly (through a tunnel) to forward requests to local apps under development.
 
 ## Setup
@@ -17,6 +18,12 @@ Testing sending a JSON payload:
 
 ```shell
 curl -X POST http://127.0.0.1:3033/any/path -H 'Content-Type: application/json' -d '{"sample":"json"}'
+```
+
+or with a different request method:
+
+```shell
+curl -X PUT http://127.0.0.1:3033/any/path -H 'Content-Type: application/json' -d '{"sample":"json"}'
 ```
 
 ### Run in production
