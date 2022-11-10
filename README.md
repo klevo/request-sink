@@ -1,5 +1,7 @@
 # RequestSink
 
+<img src="https://user-images.githubusercontent.com/32981/201108854-8fdd870a-d742-4495-94ce-5c4f836f6a41.png" width="350" height="350" />
+
 Simple request forwarder that can be exposed publicly (through a tunnel) to forward requests to local apps under development.
 
 This is useful if you have some kind of a push API you want to develop against, and you want to receive requests from such API, safely, on your localhost.
