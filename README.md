@@ -13,6 +13,12 @@ bundle install
 bundle exec rerun "rackup -p 3033"
 ```
 
+Testing sending a JSON payload:
+
+```shell
+curl -X POST http://127.0.0.1:3033/any/path -H 'Content-Type: application/json' -d '{"sample":"json"}'
+```
+
 ### Run in production
 
 ```shell
