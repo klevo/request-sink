@@ -35,7 +35,6 @@ class App < Sinatra::Base
       )
 
       status response.code
-      body response.body
     end
   end
 end
