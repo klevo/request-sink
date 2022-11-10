@@ -22,6 +22,7 @@ class App < Sinatra::Base
       #   request.env[CONTENT_TYPE]: #{request.env["CONTENT_TYPE"]}
       #   request.body: #{request.body.read}
       # DEBUG
+      puts "Forwarding #{request.request_method} request from #{request.user_agent} to #{request.path_info}"
 
       target_url = [ENV["FORWARD_TO"], request.path_info].join
       # TODO: Add things like API auth username & pass
