@@ -16,16 +16,10 @@ class App < Sinatra::Base
 
   %w(post put patch delete).each do |method|
     send method, "/*" do
-      # <<~DEBUG
-      #   request_path: #{request.path_info}
-      #   request.request_method: #{request.request_method}
-      #   request.env[CONTENT_TYPE]: #{request.env["CONTENT_TYPE"]}
-      #   request.body: #{request.body.read}
-      # DEBUG
-      puts "Forwarding #{request.request_method} request from #{request.user_agent} to #{request.path_info}"
-
       target_url = [ENV["FORWARD_TO"], request.path_info].join
-      # TODO: Add things like API auth username & pass
+      puts "Forwarding #{request.request_method} request from #{request.user_agent} to #{target_url}"
+
+      # TODO: Add headers like API auth username & pass
       headers = { 'Content-Type' => request.env["CONTENT_TYPE"] }
 
       response = HTTParty.send(
