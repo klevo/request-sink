@@ -5,4 +5,5 @@ gem "puma"
 
 group :development do
   gem "ruby-lsp"
+  gem "rerun"
 end

@@ -10,7 +10,7 @@ bundle install
 ### Run it development
 
 ```shell
-bundle exec rackup -p 3033
+bundle exec rerun "rackup -p 3033"
 ```
 
 ### Run in production
