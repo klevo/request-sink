@@ -5,13 +5,15 @@ class App < Sinatra::Base
     "Hello. This is RequestSink!"
   end
 
-  post "/*" do
-    # request.path_info
-    <<~DEBUG
-      request_path: #{request.path_info}
-      request.env[CONTENT_TYPE]: #{request.env["CONTENT_TYPE"]}
-      request.body: #{request.body.read}
-    DEBUG
+  %w(post put patch delete).each do |method|
+    send method, "/*" do
+      <<~DEBUG
+        request_path: #{request.path_info}
+        request.request_method: #{request.request_method}
+        request.env[CONTENT_TYPE]: #{request.env["CONTENT_TYPE"]}
+        request.body: #{request.body.read}
+      DEBUG
+    end
   end
 end
 
