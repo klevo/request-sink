@@ -1,20 +1,29 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    language_server-protocol (3.17.0.1)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.5.8)
+    prettier_print (1.1.0)
     puma (5.6.5)
       nio4r (~> 2.0)
     rack (2.2.4)
     rack-protection (2.1.0)
       rack
+    ruby-lsp (0.3.5)
+      language_server-protocol (~> 3.17.0)
+      sorbet-runtime
+      syntax_tree (>= 4.0.2)
     ruby2_keywords (0.0.5)
     sinatra (2.1.0)
       mustermann (~> 1.0)
       rack (~> 2.2)
       rack-protection (= 2.1.0)
       tilt (~> 2.0)
+    sorbet-runtime (0.5.10549)
+    syntax_tree (5.0.0)
+      prettier_print (>= 1.1.0)
     tilt (2.0.11)
 
 PLATFORMS
@@ -22,6 +31,7 @@ PLATFORMS
 
 DEPENDENCIES
   puma
+  ruby-lsp
   sinatra
 
 BUNDLED WITH
