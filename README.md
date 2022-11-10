@@ -1,6 +1,6 @@
 # RequestSink
 
-Simple request forwarder that can be exposed publicly (through a tunnel) to forward requests to local apps under development. 
+Simple request forwarder that can be exposed publicly (through a tunnel) to forward requests to local apps under development.
 
 This is useful if you have some kind of a push API you want to develop against, and you want to receive requests from such API, safely, on your localhost.
 
@@ -42,8 +42,8 @@ it forwarded the request to:
 
 ```shell
 curl -X POST http://127.0.0.1:3033/any/path \
-  -H 'Content-Type: application/json'
-  -d '{"sample":"json"}'
+  -H 'Content-Type: application/json' \
+  -d '{"sample":"json"}' \
   -w '%{http_code}'
 ```
 
@@ -51,7 +51,7 @@ or with a different request method:
 
 ```shell
 curl -X PUT http://127.0.0.1:3033/any/path  \
-  -H 'Content-Type: application/json'
-  -d '{"sample":"json"}'
+  -H 'Content-Type: application/json' \
+  -d '{"sample":"json"}' \
   -w '%{http_code}'
 ```
