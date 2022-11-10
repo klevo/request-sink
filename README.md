@@ -1,6 +1,6 @@
-# request-sink
+# RequestSink
 
-Simple request forwarder that can be exposed publicly (through a tunnel) to forward requests to local apps under development.
+Simple request forwarder that can be exposed publicly (through a tunnel) to forward requests to local apps under development. Why not just expose the other app in question instead? Well usually it's going to be something like a Rails app, running in development mode. You don't want to expose such codebase in development mode to public internet directly, due to the large attack surface and possible disclosure of sensitive information.
 
 ## Setup
 
@@ -8,26 +8,46 @@ Simple request forwarder that can be exposed publicly (through a tunnel) to forw
 bundle install
 ```
 
-### Run it development
+## Run it in development
+
+If you're developing on RequestSink, run it as follows. Code reloading is enabled.
+
+Let's say you're running a Rails app on localhost port 3000. To forward requests that hit
+RequestSink you can do:
 
 ```shell
-bundle exec rerun "rackup -p 3033"
+FORWARD_TO="http://localhost:3000" bundle exec rerun "rackup -p 3033"
 ```
 
-Testing sending a JSON payload:
+`FORWARD_TO` environment variable is required and should contain a fully qualified URI. It can also contain a path, however *always* ommit the trailing `/`.
+
+## Run in production
+
+For all other uses outside of developing on the codebase, run in production mode:
 
 ```shell
-curl -X POST http://127.0.0.1:3033/any/path -H 'Content-Type: application/json' -d '{"sample":"json"}'
+FORWARD_TO="http://localhost:3000" RACK_ENV=production bundle exec rackup -p 3033
+```
+
+To expose KitcheSink on the public internet, use something like [Cloudflare tunnel](https://www.cloudflare.com/en-gb/products/tunnel/) or [ngrok](https://ngrok.com).
+
+## Testing
+
+Testing sending a JSON payload to KitchenSink. Returns status code from the target
+it forwarded the request to:
+
+```shell
+curl -X POST http://127.0.0.1:3033/any/path \
+  -H 'Content-Type: application/json'
+  -d '{"sample":"json"}'
+  -w '%{http_code}'
 ```
 
 or with a different request method:
 
 ```shell
-curl -X PUT http://127.0.0.1:3033/any/path -H 'Content-Type: application/json' -d '{"sample":"json"}'
-```
-
-### Run in production
-
-```shell
-RACK_ENV=production bundle exec rackup -p 3033
+curl -X PUT http://127.0.0.1:3033/any/path  \
+  -H 'Content-Type: application/json'
+  -d '{"sample":"json"}'
+  -w '%{http_code}'
 ```
