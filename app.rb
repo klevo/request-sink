@@ -6,6 +6,11 @@ if ENV["FORWARD_TO"].nil?
 else
   puts
   puts "Requests will be forwarded to #{ENV["FORWARD_TO"]}"
+
+  if ENV["FORWARD_HEADERS"]
+    puts "Extra headers to forward: #{ENV["FORWARD_HEADERS"]}"
+  end
+
   puts
 end
 
@@ -18,9 +23,15 @@ class App < Sinatra::Base
     send method, "/*" do
       target_url = [ENV["FORWARD_TO"], request.path_info].join
       puts "Forwarding #{request.request_method} request from #{request.user_agent} to #{target_url}"
+      puts "request.env: #{request.env}"
 
-      # TODO: Add headers like API auth username & pass
-      headers = { 'Content-Type' => request.env["CONTENT_TYPE"] }
+      headers = {
+        'Content-Type' => request.env["CONTENT_TYPE"]
+      }
+      extra_headers = ENV["FORWARD_HEADERS"].to_s.split(' ')
+      extra_headers.each do |key|
+        headers[key] = request.env["HTTP_#{key}"]
+      end
 
       response = HTTParty.send(
         method,

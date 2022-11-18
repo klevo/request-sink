@@ -22,7 +22,7 @@ Let's say you're running a Rails app on localhost port 3000. To forward requests
 RequestSink you can do:
 
 ```shell
-FORWARD_TO="http://localhost:3000" bundle exec rerun "rackup -p 3033"
+FORWARD_TO="http://localhost:3000" FORWARD_HEADERS="X_FORWARDED_FOR X_API_KEY" bundle exec rerun "rackup -p 3033"
 ```
 
 `FORWARD_TO` environment variable is required and should contain a fully qualified URI. It can also contain a path, however *always* ommit the trailing `/`.
@@ -32,7 +32,7 @@ FORWARD_TO="http://localhost:3000" bundle exec rerun "rackup -p 3033"
 For all other uses outside of developing on the codebase, run in production mode:
 
 ```shell
-FORWARD_TO="http://localhost:3000" RACK_ENV=production bundle exec rackup -p 3033
+FORWARD_TO="http://localhost:3000" FORWARD_HEADERS="X_FORWARDED_FOR X_API_KEY" RACK_ENV=production bundle exec rackup -p 3033
 ```
 
 To expose KitcheSink on the public internet, use something like [Cloudflare tunnel](https://www.cloudflare.com/en-gb/products/tunnel/) or [ngrok](https://ngrok.com).
