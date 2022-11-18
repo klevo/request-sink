@@ -23,7 +23,6 @@ class App < Sinatra::Base
     send method, "/*" do
       target_url = [ENV["FORWARD_TO"], request.path_info].join
       puts "Forwarding #{request.request_method} request from #{request.user_agent} to #{target_url}"
-      puts "request.env: #{request.env}"
 
       headers = {
         'Content-Type' => request.env["CONTENT_TYPE"]
