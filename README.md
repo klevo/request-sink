@@ -27,6 +27,8 @@ FORWARD_TO="http://localhost:3000" FORWARD_HEADERS="X_FORWARDED_FOR X_API_KEY" b
 
 `FORWARD_TO` environment variable is required and should contain a fully qualified URI. It can also contain a path, however *always* ommit the trailing `/`.
 
+`FORWARD_HEADERS` allows you to specify extra HTTP headers to forward to the target. For example, if you're using some kind of API authentication, you might want to forward the appropriate header. The list of headers is *space* seprated. *Do not add the HTTP_ header prefix*, i.e. instead of `HTTP_X_FORWARDED_FOR` specify it as just `X_FORWARDED_FOR`.
+
 ## Run in production
 
 For all other uses outside of developing on the codebase, run in production mode:
