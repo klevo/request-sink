@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    colorize (0.8.1)
     ffi (1.15.5)
     httparty (0.20.0)
       mime-types (~> 3.0)
@@ -47,6 +48,7 @@ PLATFORMS
   x86_64-darwin-22
 
 DEPENDENCIES
+  colorize
   httparty
   puma
   rerun

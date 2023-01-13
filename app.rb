@@ -1,5 +1,6 @@
 require "sinatra"
 require "httparty"
+require "colorize"
 
 if ENV["FORWARD_TO"].nil?
   raise StandardError, "FORWARD_TO enviroment variable must be specified."
@@ -22,7 +23,7 @@ class App < Sinatra::Base
   %w(post put patch delete).each do |method|
     send method, "/*" do
       target_url = [ENV["FORWARD_TO"], request.path_info].join
-      puts "Forwarding #{request.request_method} request from #{request.user_agent} to #{target_url}"
+      request_body = request.body.read
 
       headers = {
         'Content-Type' => request.env["CONTENT_TYPE"]
@@ -35,11 +36,17 @@ class App < Sinatra::Base
       response = HTTParty.send(
         method,
         target_url,
-        body: request.body.read,
+        body: request_body,
         headers: headers
       )
 
       status response.code
+
+      puts <<~LOG
+        #{request.request_method.red} #{request.user_agent.italic}
+        #{request_body}
+        #{target_url.green} #{response.code.to_s.yellow}
+      LOG
     end
   end
 end
