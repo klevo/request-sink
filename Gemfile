@@ -6,6 +6,5 @@ gem "httparty"
 gem "colorize"
 
 group :development do
-  gem "ruby-lsp"
   gem "rerun"
 end

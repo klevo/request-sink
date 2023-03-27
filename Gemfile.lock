@@ -6,7 +6,6 @@ GEM
     httparty (0.21.0)
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
-    language_server-protocol (3.17.0.2)
     listen (3.8.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -15,10 +14,9 @@ GEM
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.5.8)
-    prettier_print (1.2.0)
-    puma (6.0.2)
+    puma (6.1.1)
       nio4r (~> 2.0)
-    rack (2.2.6.2)
+    rack (2.2.6.4)
     rack-protection (3.0.5)
       rack
     rb-fsevent (0.11.2)
@@ -26,20 +24,13 @@ GEM
       ffi (~> 1.0)
     rerun (0.14.0)
       listen (~> 3.0)
-    ruby-lsp (0.3.8)
-      language_server-protocol (~> 3.17.0)
-      sorbet-runtime
-      syntax_tree (>= 5.0.0, < 6)
     ruby2_keywords (0.0.5)
     sinatra (3.0.5)
       mustermann (~> 3.0)
       rack (~> 2.2, >= 2.2.4)
       rack-protection (= 3.0.5)
       tilt (~> 2.0)
-    sorbet-runtime (0.5.10628)
-    syntax_tree (5.2.0)
-      prettier_print (>= 1.2.0)
-    tilt (2.0.11)
+    tilt (2.1.0)
 
 PLATFORMS
   arm64-darwin-22
@@ -51,7 +42,6 @@ DEPENDENCIES
   httparty
   puma
   rerun
-  ruby-lsp
   sinatra
 
 BUNDLED WITH
