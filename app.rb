@@ -51,6 +51,7 @@ class App < Sinatra::Base
       response = forward "get"
 
       status response.code
+      content_type response.content_type
 
       puts <<~LOG
         #{request.request_method.red} #{request.user_agent.italic}
