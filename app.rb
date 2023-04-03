@@ -20,24 +20,40 @@ class App < Sinatra::Base
     "Hello. This is RequestSink!"
   end
 
+  def set_target_url
+    @target_url = [ENV["FORWARD_TO"], request.path_info].join
+  end
+
+  def set_headers
+    @headers = {
+      'Content-Type' => request.env["CONTENT_TYPE"]
+    }
+    extra_headers = ENV["FORWARD_HEADERS"].to_s.split(' ')
+    extra_headers.each do |key|
+      @headers[key] = request.env["HTTP_#{key}"]
+    end
+  end
+
+  ENV["GET_PATHS"].split(' ').each do |path|
+    get "#{path}/*" do
+      set_target_url
+      set_headers
+
+      # TODO: forward and render response
+    end
+  end
+
   %w(post put patch delete).each do |method|
     send method, "/*" do
-      target_url = [ENV["FORWARD_TO"], request.path_info].join
+      set_target_url
+      set_headers
+
       request_body = request.body.read
-
-      headers = {
-        'Content-Type' => request.env["CONTENT_TYPE"]
-      }
-      extra_headers = ENV["FORWARD_HEADERS"].to_s.split(' ')
-      extra_headers.each do |key|
-        headers[key] = request.env["HTTP_#{key}"]
-      end
-
       response = HTTParty.send(
         method,
-        target_url,
+        @target_url,
         body: request_body,
-        headers: headers
+        headers: @headers
       )
 
       status response.code
@@ -45,7 +61,7 @@ class App < Sinatra::Base
       puts <<~LOG
         #{request.request_method.red} #{request.user_agent.italic}
         #{request_body}
-        #{target_url.green} #{response.code.to_s.yellow}
+        #{@target_url.green} #{response.code.to_s.yellow}
       LOG
     end
   end
