@@ -58,4 +58,8 @@ curl -X PUT http://127.0.0.1:3033/any/path  \
   -H 'Content-Type: application/json' \
   -d '{"sample":"json"}' \
   -w '%{http_code}'
+
+curl -X GET http://127.0.0.1:3033/install/df2f6bb1f80423801e504a276a67f0
 ```
+
+

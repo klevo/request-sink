@@ -34,12 +34,30 @@ class App < Sinatra::Base
     end
   end
 
-  ENV["GET_PATHS"].split(' ').each do |path|
-    get "#{path}/*" do
+  def forward(method, body = nil)
+    HTTParty.send(
+      method,
+      @target_url,
+      body: body,
+      headers: @headers
+    )
+  end
+
+  ENV["GET_PATHS"]&.split(' ')&.each do |path|
+    get path do
       set_target_url
       set_headers
 
-      # TODO: forward and render response
+      response = forward "get"
+
+      status response.code
+
+      puts <<~LOG
+        #{request.request_method.red} #{request.user_agent.italic}
+        #{@target_url.green} #{response.code.to_s.yellow}
+      LOG
+
+      response.body
     end
   end
 
@@ -47,14 +65,9 @@ class App < Sinatra::Base
     send method, "/*" do
       set_target_url
       set_headers
-
       request_body = request.body.read
-      response = HTTParty.send(
-        method,
-        @target_url,
-        body: request_body,
-        headers: @headers
-      )
+
+      response = forward method, request_body
 
       status response.code
 
