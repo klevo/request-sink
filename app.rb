@@ -58,7 +58,7 @@ class App < Sinatra::Base
         #{@target_url.green} #{response.code.to_s.yellow}
       LOG
 
-      response.body
+      response.body if response.code < 300
     end
   end
 
@@ -77,6 +77,10 @@ class App < Sinatra::Base
         #{request_body}
         #{@target_url.green} #{response.code.to_s.yellow}
       LOG
+
+      # If response succeeded return the body too
+      # otherwise hide the body, to not leak error backtraces or similar sensitive content.
+      response.body if response.code < 300
     end
   end
 end
