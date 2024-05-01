@@ -2,16 +2,20 @@ GEM
   remote: https://rubygems.org/
   specs:
     base64 (0.2.0)
+    bigdecimal (3.1.7)
     colorize (1.1.0)
+    csv (3.3.0)
     ffi (1.16.3)
-    httparty (0.21.0)
+    httparty (0.22.0)
+      csv
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     mini_mime (1.1.5)
-    multi_xml (0.6.0)
+    multi_xml (0.7.0)
+      bigdecimal (~> 3.1)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.7.1)
@@ -56,4 +60,4 @@ DEPENDENCIES
   sinatra
 
 BUNDLED WITH
-   2.5.7
+   2.5.9
