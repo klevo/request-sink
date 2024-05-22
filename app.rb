@@ -54,8 +54,8 @@ class App < Sinatra::Base
       content_type response.content_type
 
       puts <<~LOG
-        #{request.request_method.red} #{request.user_agent.italic}
-        #{@target_url.green} #{response.code.to_s.yellow}
+        #{request.user_agent.italic.gray} #{request.request_method.bold} #{@target_url}
+          #{response.code.to_s.yellow}
       LOG
 
       response.body if response.code < 300
@@ -73,9 +73,9 @@ class App < Sinatra::Base
       status response.code
 
       puts <<~LOG
-        #{request.request_method.red} #{request.user_agent.italic}
-        #{request_body}
-        #{@target_url.green} #{response.code.to_s.yellow}
+        #{request.user_agent.italic.gray} #{request.request_method.bold} #{@target_url}
+          #{request_body}
+          #{response.code.to_s.yellow}
       LOG
 
       # If response succeeded return the body too
