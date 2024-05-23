@@ -54,7 +54,8 @@ class App < Sinatra::Base
       content_type response.content_type
 
       puts <<~LOG
-        #{request.user_agent.italic.gray} #{request.request_method.bold} #{@target_url}
+        #{request.user_agent.italic.gray}
+          #{request.request_method.bold} #{@target_url}
           #{response.code.to_s.yellow}
       LOG
 
@@ -73,7 +74,9 @@ class App < Sinatra::Base
       status response.code
 
       puts <<~LOG
-        #{request.user_agent.italic.gray} #{request.request_method.bold} #{@target_url}
+        #{request.user_agent.italic.gray}
+          #{request.request_method.bold} #{@target_url.italic}
+          #{@headers.to_s.blue}
           #{request_body}
           #{response.code.to_s.yellow}
       LOG
