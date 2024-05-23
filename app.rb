@@ -48,18 +48,22 @@ class App < Sinatra::Base
       set_target_url
       set_headers
 
-      response = forward "get"
+      resp = forward "get"
 
-      status response.code
-      content_type response.content_type
+      status resp.code
+      content_type resp.content_type
 
       puts <<~LOG
         #{request.user_agent.italic.gray}
           #{request.request_method.bold} #{@target_url}
-          #{response.code.to_s.yellow}
+          #{resp.code.to_s.yellow}
       LOG
 
-      response.body if response.code < 300
+      if resp.headers["www-authenticate"]
+        response.headers["Www-Authenticate"] = Array(resp.headers["www-authenticate"]).first
+      end
+
+      resp.body if resp.code < 300
     end
   end
 
@@ -69,21 +73,25 @@ class App < Sinatra::Base
       set_headers
       request_body = request.body.read
 
-      response = forward method, request_body
+      resp = forward method, request_body
 
-      status response.code
+      status resp.code
 
       puts <<~LOG
         #{request.user_agent.italic.gray}
           #{request.request_method.bold} #{@target_url.italic}
           #{@headers.to_s.blue}
           #{request_body}
-          #{response.code.to_s.yellow}
+          #{resp.code.to_s.yellow}
       LOG
 
-      # If response succeeded return the body too
+      if resp.headers["www-authenticate"]
+        response.headers["Www-Authenticate"] = Array(resp.headers["www-authenticate"]).first
+      end
+
+      # If resp succeeded return the body too
       # otherwise hide the body, to not leak error backtraces or similar sensitive content.
-      response.body if response.code < 300
+      resp.body if resp.code < 300
     end
   end
 end
